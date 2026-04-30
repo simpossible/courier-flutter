@@ -7,7 +7,7 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  mqtt_client: ^10.2.1
+  mqtt5_client: ^3.4.0
   protobuf: ^4.0.0
   fixnum: ^1.1.0
 

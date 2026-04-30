@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:mqtt5_client/mqtt5_client.dart';
+import 'package:mqtt5_client/mqtt5_server_client.dart';
 
 import 'codec.dart';
 import 'errors.dart';
@@ -142,7 +142,7 @@ class CourierClient {
       for (final msg in messages) {
         try {
           final pubMsg = msg.payload as MqttPublishMessage;
-          final bytes = Uint8List.fromList(pubMsg.payload.message.toList());
+          final bytes = Uint8List.fromList(pubMsg.payload.message?.toList() ?? []);
           _handleMessage(bytes);
         } catch (e) {
           _errorController.add(
@@ -234,7 +234,7 @@ class CourierClient {
   }
 
   void _publish(MqttServerClient client, String topic, Uint8List frame) {
-    final builder = MqttClientPayloadBuilder();
+    final builder = MqttPayloadBuilder();
     for (final b in frame) {
       builder.addByte(b);
     }

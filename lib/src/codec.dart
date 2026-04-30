@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 const int protocolVersion = 1;
 const int requestHeaderLen = 28;
-const int responseHeaderLen = 22;
+const int responseHeaderLen = 24;
 const int responseCodeOk = 0;
 
 void _writeUint32BE(ByteData buf, int offset, int value) {
@@ -70,8 +70,8 @@ ResponseFrame decodeResponse(Uint8List data) {
   final buf = ByteData.sublistView(data);
   final length = _readUint32BE(buf, 0);
   final requestId = Uint8List.sublistView(data, 4, 20);
-  final code = _readUint16BE(buf, 20);
-  final payload = Uint8List.sublistView(data, 22, length);
+  final code = _readUint32BE(buf, 20);
+  final payload = Uint8List.sublistView(data, 24, length);
 
   return ResponseFrame(requestId: requestId, code: code, payload: payload);
 }
